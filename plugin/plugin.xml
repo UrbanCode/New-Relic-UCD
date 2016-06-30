@@ -9,7 +9,7 @@
   </header>
   <step-type name="Deployment Notification">
     <description>
-      Plugin for sending deployment notifications to New Relic.
+      Send a deployment notifications to New Relic.
 	</description>
     <properties>
       <property name="newrelic_url" required="true">
