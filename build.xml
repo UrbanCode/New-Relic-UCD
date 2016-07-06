@@ -9,7 +9,7 @@
 
 -->
 
-<project name="urbancode-deploy-newrelic-plugin" default="main" basedir=".">
+<project name="urbancode-deploy-newrelic-plugin" default="main" basedir="." xmlns:ivy="antlib:org.apache.ivy.ant">
 
 	<property name="project" value="" />
     <property name="version" value="dev" />
@@ -21,10 +21,20 @@
 	<property name="lib.dir" value="${basedir}/lib" />
 	<property name="plugin.dir" value="${basedir}/plugin" />
 	<property name="license.dir" value="${basedir}/license" />
-	<target name="main" depends="clean, copyDependencies, buildZip" />
+    
+    <available classname="org.apache.ivy.Main" property="ivy.installed"/> 
+
+	<target name="main" depends="clean, resolve, copyDependencies, buildZip" />
+    
+    <!-- Install Ivy -->
+    <target name="install-ivy" description="Install ivy" unless="ivy.installed">
+        <mkdir dir="${user.home}/.ant/lib"/>
+        <get dest="${user.home}/.ant/lib/ivy.jar" src="http://search.maven.org/remotecontent?filepath=org/apache/ivy/ivy/2.3.0/ivy-2.3.0.jar"/>
+        <fail message="Ivy has been installed. Run the build again"/>
+    </target>
 
 	<!-- Copy in the dependencies -->
-	<target name="copyDependencies">
+	<target name="copyDependencies" depends="resolve">
 
 		<!-- inputs (info, upgrade) -->
 		<copy todir="${build.dir}">
@@ -47,19 +57,18 @@
 			</copy>
 		
 		<mkdir dir="${build.dir}/lib"/>
-					<!-- copy libs -->
-					<copy todir="${build.dir}/lib">
-						<fileset dir="${lib.dir}">
-							<include name="commons-httpclient-3.1.jar" />
-							<include name="commons-codec-1.2.jar" />
-							<include name="commons-logging-1.1.3.jar" />
-						</fileset>
-					</copy>
+            <!-- copy libs -->
+            <copy todir="${build.dir}/lib">
+                <fileset dir="${lib.dir}">
+                            <exclude name="**javadoc.jar" />
+                            <exclude name="**sources.jar" />
+                </fileset>
+            </copy>
 							
 	</target>
 
 	<!-- Build the actual zip file that gets uploaded to uDeploy -->
-	<target name="buildZip">
+	<target name="buildZip" depends="resolve">
 		<zip destfile="${deployPluginArchiveName}" basedir="${build.dir}" update="false"/>
 	</target>
 
@@ -70,4 +79,16 @@
 		<delete file="${deployPluginArchiveName}" />
 	</target>
 
+    <target name="resolve" depends="install-ivy" unless="resolve.no" description="Resolve all dependencies">
+        <mkdir dir="${lib.dir}"/>
+        <ivy:cachepath pathid="${lib.dir}">
+            <!-- https://mvnrepository.com/artifact/commons-codec/commons-codec -->
+            <dependency org="commons-codec" name="commons-codec" rev="1.2" transitive="false" />
+            <!-- https://mvnrepository.com/artifact/commons-httpclient/commons-httpclient -->
+            <dependency org="commons-httpclient" name="commons-httpclient" rev="3.1" transitive="false" />
+            <!-- https://mvnrepository.com/artifact/commons-logging/commons-logging -->
+            <dependency org="commons-logging" name="commons-logging" rev="1.1.3" transitive="false" />
+        </ivy:cachepath>
+        <ivy:retrieve />
+    </target>
 </project>
