@@ -19,6 +19,8 @@ This plugin is protected under the [Eclipse Public 1.0 License](http://www.eclip
 
 ### History
     Version 2
+        Added plugin step to upload Xcode DSYM files to New Relic server. 
+    Version 2
         Community GitHub Release
  
 ### How to build the plugin from eclipse client:
