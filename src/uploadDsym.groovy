@@ -76,7 +76,14 @@ def uploadDSYM(zipFilePath, dSYMUUIDS, productName, applicationid) {
 
 def dSYMBase = xcArchivePath + "/dSYMs"
 def dSYMSRC = dSYMBase + "/${productName}.app.dSYM"
-def fullFileName = new File(dSYMSRC).name
+def dSYMFile = new File(dSYMSRC)
+def fullFileName = dSYMFile.name
+
+if (!dSYMFile.exists()) {
+    println "No DSYM file found"
+    System.exit(1)
+}
+
 def dWARFDSYMFileName = fullFileName.take(fullFileName.lastIndexOf('.'))
 def dSYMTimestamp= System.currentTimeMillis() / 1000;
 def dSYMArchivePath = "/tmp/${dWARFDSYMFileName}-${dSYMTimestamp}.zip"
