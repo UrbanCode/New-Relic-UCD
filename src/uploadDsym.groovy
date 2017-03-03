@@ -8,8 +8,8 @@ import static groovyx.net.http.Method.POST
 import com.urbancode.air.AirPluginTool;
 
 final def workDir = new File('.').canonicalFile;
-final airTool = new AirPluginTool(args[0], args[1])
-final props = airTool.getStepProperties()
+final def airTool = new AirPluginTool(args[0], args[1])
+final def props = airTool.getStepProperties()
 
 final def applicationId = props['application_id']
 final def productName = props['product_name'];
