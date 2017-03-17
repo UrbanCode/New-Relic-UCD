@@ -1,9 +1,8 @@
 /**
- * UrbanCode Deploy Plug-in for NewRelic
- * 
- * This plugin posts deployment notifications to NewRelic
- * @version 1.1
- * @author cooperc
+ *  © Copyright IBM Corporation 2016, 2017.
+ *  This is licensed under the following license.
+ *  The Eclipse Public 1.0 License (http://www.eclipse.org/legal/epl-v10.html)
+ *  U.S. Government Users Restricted Rights:  Use, duplication or disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
  */
 import com.urbancode.air.AirPluginTool;
 import com.urbancode.air.CommandHelper;
@@ -48,7 +47,7 @@ try {
 
 // Construct request and post
 try {
-	
+
 	if (!description) {
 		description = app_name;
 	}
@@ -68,14 +67,14 @@ try {
     post.setRequestEntity(requestEntity);
 
     def status = http.executeMethod(post);
-	
+
     if (status == 201){
 		println "Success: ${status}";
 		System.exit(0);
 	} else {
 		println "Failure: ${status}";
 		System.exit(2);
-	}		
+	}
 } catch(Exception e){
 	println "ERROR setting path: ${e.message}";
 	System.exit(3);
