@@ -12,15 +12,15 @@ import org.apache.http.entity.mime.MultipartEntityBuilder
 import org.apache.http.entity.mime.content.FileBody
 import org.apache.http.entity.mime.content.StringBody
 import static groovyx.net.http.Method.POST
-import com.urbancode.air.AirPluginTool;
+import com.urbancode.plugin.helper.NewAirPluginTool
 
-final def workDir = new File('.').canonicalFile;
-final def airTool = new AirPluginTool(args[0], args[1])
-final def props = airTool.getStepProperties()
+def workDir = new File('.').canonicalFile;
+def airTool = new NewAirPluginTool(args[0], args[1])
+def props = airTool.getStepProperties()
 
-final def applicationId = props['application_id']
-final def productName = props['product_name'];
-final def xcArchivePath = props['archive_path'];
+def applicationId = props['application_id']
+def productName = props['product_name'];
+def xcArchivePath = props['archive_path'];
 
 def dumpDwafIDs(path) {
     def dwarfDump = "xcrun dwarfdump --uuid ${path}"
