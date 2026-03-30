@@ -4,16 +4,15 @@
  *  The Eclipse Public 1.0 License (http://www.eclipse.org/legal/epl-v10.html)
  *  U.S. Government Users Restricted Rights:  Use, duplication or disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
  */
-import com.urbancode.air.AirPluginTool;
 import com.urbancode.air.CommandHelper;
 
 import org.apache.commons.httpclient.HttpClient
 import org.apache.commons.httpclient.methods.PostMethod
 import org.apache.commons.httpclient.methods.StringRequestEntity
 
-final def workDir = new File('.').canonicalFile;
-final def props = new Properties();
-final def inputPropsFile = new File(args[0]);
+def workDir = new File('.').canonicalFile;
+def props = new Properties();
+def inputPropsFile = new File(args[0]);
 try {
     inputPropsStream = new FileInputStream(inputPropsFile);
     props.load(inputPropsStream);
@@ -23,12 +22,12 @@ catch (IOException e) {
 }
 
 // properties
-final def newrelic_url = props['newrelic_url'];
-final def api_key = props['api_key']
-final def app_name = props['app_name'];
-final def description = props['description'];
-final def user = props['user'];
-final def version = props['version'];
+def newrelic_url = props['newrelic_url'];
+def api_key = props['api_key']
+def app_name = props['app_name'];
+def description = props['description'];
+def user = props['user'];
+def version = props['version'];
 
 def commandHelper = new CommandHelper(workDir);
 

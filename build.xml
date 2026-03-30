@@ -233,6 +233,7 @@
             </unzip>
             <groovyc srcdir="${lib.build.gputil.sources.dir}" destdir="${lib.build.gputil.classes.dir}">
                 <include name="**/*.groovy"/>
+                <exclude name="com/urbancode/air/AirPluginTool.groovy"/>
                 <classpath path="${lib.build.dir}">
                   <fileset dir=".">
                     <include name="**/*.jar"/>
